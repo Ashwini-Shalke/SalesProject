@@ -8,55 +8,25 @@
 import UIKit
 
 class SalesViewController: UIViewController {
-   
-   lazy var salesTableView: SalesTableView = {
+    lazy var salesTableView: SalesTableView = {
         var salesTableView = SalesTableView()
-        salesTableView.salesTableDelegate = self
         return salesTableView
-    }()
-    
-    let salesDetailLabel: UILabel = {
-       let salesDetail = UILabel()
-        salesDetail.backgroundColor     = .systemRed
-        salesDetail.font    = UIFont(name: "georgia", size: 20)
-        salesDetail.textColor = .white
-        salesDetail.textAlignment = .center
-        salesDetail.layer.borderColor   = UIColor.white.cgColor
-        salesDetail.layer.cornerRadius  = 5
-        salesDetail.layer.borderWidth   = 4.0
-        salesDetail.translatesAutoresizingMaskIntoConstraints = false
-        return salesDetail
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = .white        
         setupLayout()
     }
     
     func setupLayout(){
         salesTableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(salesTableView)
+        #warning("Pin tableview to viewcontroller")
         NSLayoutConstraint.activate([
-                                        salesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                                        salesTableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
-                                        salesTableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)])
-        
-        view.addSubview(salesDetailLabel)
-        NSLayoutConstraint.activate([
-                                        salesDetailLabel.topAnchor.constraint(equalTo: salesTableView.bottomAnchor, constant: 30),
-                                        salesDetailLabel.heightAnchor.constraint(equalToConstant: 100),
-                                        salesDetailLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)])
-        
+            salesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            salesTableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
+            salesTableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
+        ])
     }
 }
-
-extension SalesViewController : salesTableViewDelegate {
-    
-    func handleSelectRowAt(country: String, price: Int) {
-        salesDetailLabel.text = "\(country) - Totalprice :\(price)"
-    }
-}
-
-
-
