@@ -13,12 +13,14 @@ protocol salesTableViewDelegate : AnyObject {
 
 class SalesTableView: UITableView {
     weak var salesTableDelegate: salesTableViewDelegate?
-
+    
     let cellId = "CellID"
     var jsonData = [Product]()
     var prodData = [String : Int]()
     var prodDetail = [String: [String : Int]]()
     var prodKeys = [String]()
+    var maxSalesPrice = String()
+    var selectedCell : IndexPath?
     
     let screenLockSwitch: UISwitch = {
         let screenLock = UISwitch(frame: .zero)
@@ -50,17 +52,15 @@ class SalesTableView: UITableView {
                     productValue[index.country] = priceValue
                 } else {
                     productValue[index.country] = index.price
-                 }
+                }
                 prodDetail[index.prod] = productValue
             } else {
                 prodData[index.country] = index.price
                 prodDetail[index.prod] = prodData
             }
         }
-        
         prodKeys = fetchKeyProdDetail()
         print(prodKeys)
-        
     }
     
     func fetchKeyProdDetail() -> [String]{
@@ -71,7 +71,6 @@ class SalesTableView: UITableView {
         keys.sort()
         return keys
     }
-    
 }
 
 extension SalesTableView: UITableViewDelegate, UITableViewDataSource {
@@ -80,12 +79,28 @@ extension SalesTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
+        cell.selectionStyle = .none
         cell.textLabel?.text = "Product Name  \(prodKeys[indexPath.row])"
+        cell.accessoryType = UITableViewCell.AccessoryType.detailButton
+        if selectedCell?.row == indexPath.row {
+            cell.detailTextLabel?.text = maxSalesPrice
+        }
         return cell
     }
     
-    func loadJson(filename fileName: String) -> [Product]? {
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let ProdKey = prodKeys[indexPath.row]
+        if let prodDetailArray = prodDetail[ProdKey] {
+            let highestSale = prodDetailArray.max { a , b  in a.value < b.value}
+            guard let countryValue = highestSale?.key else {return}
+            guard let priceValue = highestSale?.value else {return }
+            maxSalesPrice = "Max Total Sale in \(countryValue):\(priceValue)"
+            selectedCell = indexPath
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+        func loadJson(filename fileName: String) -> [Product]? {
             if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
                 do {
                     let data = try Data(contentsOf: url)
@@ -98,17 +113,7 @@ extension SalesTableView: UITableViewDelegate, UITableViewDataSource {
             }
             return nil
         }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let ProdKey = prodKeys[indexPath.row]
-        if let prodDetailArray = prodDetail[ProdKey] {
-           let highestSale = prodDetailArray.max { a , b  in a.value < b.value}
-            guard let countryValue = highestSale?.key else {return}
-            guard let priceValue = highestSale?.value else {return }
-            salesTableDelegate?.handleSelectRowAt(country: countryValue, price: priceValue)
-            }     
-        }
-    }
-    
-    
+     }
+  
+
 

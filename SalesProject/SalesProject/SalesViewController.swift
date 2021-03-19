@@ -39,13 +39,13 @@ class SalesViewController: UIViewController {
         view.addSubview(salesTableView)
         NSLayoutConstraint.activate([
                                         salesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                                        salesTableView.heightAnchor.constraint(equalToConstant: 250),
+                                        salesTableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
                                         salesTableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)])
         
         view.addSubview(salesDetailLabel)
         NSLayoutConstraint.activate([
                                         salesDetailLabel.topAnchor.constraint(equalTo: salesTableView.bottomAnchor, constant: 30),
-                                        salesDetailLabel.heightAnchor.constraint(equalToConstant: 70),
+                                        salesDetailLabel.heightAnchor.constraint(equalToConstant: 100),
                                         salesDetailLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)])
         
     }
