@@ -28,8 +28,10 @@ class SalesTableView: UITableView {
     
     func handleSalesData() {
         guard let data = APIService.sharedInstance.loadJson(filename: "Data") else { return }
-        salesDetail = APIService.sharedInstance.getSalesDetailArray(jsonData: data)
-        productName = APIService.sharedInstance.getProductName(prodData: salesDetail)
+        guard let sales = APIService.sharedInstance.getSalesDetailArray(jsonData: data) else { return }
+        salesDetail = sales
+        guard let products = APIService.sharedInstance.getProductName(prodData: salesDetail) else {return}
+        productName = products
     }
     
     fileprivate func setupTableView() {
@@ -49,7 +51,6 @@ extension SalesTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         #warning("Deque")
-        #warning("if possible move this to custom cell")
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
         cell.selectionStyle = .none
         cell.textLabel?.text = "Product Name  \(productName[indexPath.row])"

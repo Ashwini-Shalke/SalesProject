@@ -10,20 +10,23 @@ import UIKit
 class APIService : NSObject {
     
     static let sharedInstance = APIService()
-    var salesDetail = [String: [String : Int]]()
-    
+
     //reading JSON file
-    func loadJson(filename fileName: String) -> [Product]? {
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { return nil }
+    func loadJson(filename fileName: String?) -> [Product]? {
+        guard let file = fileName else { return nil }
+        guard let url = Bundle.main.url(forResource: file, withExtension: "json") else { return nil }
         guard let data = try? Data(contentsOf: url) else { return nil }
         let decoder = JSONDecoder()
         let jsonData = try? decoder.decode(SalesData.self, from: data)
         return jsonData?.sales
     }
     
-    func getSalesDetailArray(jsonData : [Product]) -> [String: [String : Int]] {
-        var prodData = [String : Int]()
-        for index in jsonData {
+    func getSalesDetailArray(jsonData : [Product]?) -> [String: [String : Int]]? {
+//        var prodData :[String : Int]?
+        var salesDetail = [String: [String : Int]]()
+        guard  let data = jsonData else { return nil }
+        
+        for index in data {
             if var productValue = salesDetail[index.prod] {
                 if var priceValue = productValue[index.country] {
                     priceValue += index.price
@@ -33,6 +36,7 @@ class APIService : NSObject {
                 }
                 salesDetail[index.prod] = productValue
             } else {
+                var prodData = [String : Int]()
                 prodData[index.country] = index.price
                 salesDetail[index.prod] = prodData
             }
@@ -40,12 +44,15 @@ class APIService : NSObject {
         return salesDetail
     }
     
-    func getProductName(prodData: [String: [String : Int]]) -> [String] {
+    func getProductName(prodData: [String: [String : Int]]?) -> [String]? {
         var prodName = [String]()
-        for key in salesDetail.keys {
+        guard let keys = prodData?.keys else {return nil}
+        
+        for key in keys {
             prodName.append(key)
         }
-        prodName.sort()
+        
+       prodName.sort()
         return prodName
     }
 }

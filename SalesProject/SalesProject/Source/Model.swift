@@ -11,7 +11,7 @@ struct SalesData:Decodable {
     var sales: [Product]
 }
 
-struct Product : Decodable {
+struct Product : Decodable, Equatable {
     var prod: String
     var country: String
     var price: Int
