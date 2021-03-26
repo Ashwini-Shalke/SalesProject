@@ -19,6 +19,8 @@
 		335CAE3C26038AC00082BA92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 335CAE3A26038AC00082BA92 /* LaunchScreen.storyboard */; };
 		335CAE4726038AC00082BA92 /* SalesProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335CAE4626038AC00082BA92 /* SalesProjectTests.swift */; };
 		335CAE5226038AC10082BA92 /* SalesProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335CAE5126038AC10082BA92 /* SalesProjectUITests.swift */; };
+		33E8079E260E1C5000153D8F /* SampleData.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E8079D260E1C5000153D8F /* SampleData.json */; };
+		33E8079F260E1C5000153D8F /* SampleData.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E8079D260E1C5000153D8F /* SampleData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,7 @@
 		335CAE4D26038AC00082BA92 /* SalesProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalesProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		335CAE5126038AC10082BA92 /* SalesProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesProjectUITests.swift; sourceTree = "<group>"; };
 		335CAE5326038AC10082BA92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33E8079D260E1C5000153D8F /* SampleData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleData.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,7 @@
 			children = (
 				335CAE3826038AC00082BA92 /* Assets.xcassets */,
 				33285496260DAFFC00759AC2 /* Data.json */,
+				33E8079D260E1C5000153D8F /* SampleData.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -260,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				335CAE3C26038AC00082BA92 /* LaunchScreen.storyboard in Resources */,
+				33E8079E260E1C5000153D8F /* SampleData.json in Resources */,
 				335CAE3926038AC00082BA92 /* Assets.xcassets in Resources */,
 				335CAE3726038ABC0082BA92 /* Main.storyboard in Resources */,
 				33285497260DAFFC00759AC2 /* Data.json in Resources */,
@@ -270,6 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33E8079F260E1C5000153D8F /* SampleData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +513,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU6X2YT7QZ;
 				INFOPLIST_FILE = SalesProjectTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -528,6 +535,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU6X2YT7QZ;
 				INFOPLIST_FILE = SalesProjectTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -548,6 +556,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU6X2YT7QZ;
 				INFOPLIST_FILE = SalesProjectUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -567,6 +576,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NU6X2YT7QZ;
 				INFOPLIST_FILE = SalesProjectUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

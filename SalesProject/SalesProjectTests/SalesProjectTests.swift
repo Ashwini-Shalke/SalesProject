@@ -9,25 +9,56 @@ import XCTest
 @testable import SalesProject
 
 class SalesProjectTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    func testLoadJson() {
+        let data = APIService.sharedInstance.loadJson(filename: "Data")
+        XCTAssertNotNil(data)
+    }
+    
+    func testFailToLoadJson() {
+        let data = APIService.sharedInstance.loadJson(filename: "Dat")
+        XCTAssertNil(data)
+    }
+    
+    func testValidJson() {
+        let result = APIService.sharedInstance.loadJson(filename: "SampleData")
+        let output = [Product(prod: "E", country: "USA", price: 8000), Product(prod: "C", country: "USA", price: 2000)]
+        XCTAssertEqual(output, result)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testgetSalesDetailArray(){
+        let product = [Product(prod: "U", country: "US", price: 10), Product(prod: "U", country: "US", price: 20), Product(prod: "V", country: "UK", price: 20)]
+        let productData = APIService.sharedInstance.getSalesDetailArray(jsonData: product)
+        let result = ["V": ["UK": 20], "U": ["US": 30]]
+        XCTAssertEqual(productData, result)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+ 
+    func testFalseGetSalesDetailArray(){
+        let product = [Product(prod: "U", country: "US", price: 10), Product(prod: "U", country: "US", price: 20), Product(prod: "V", country: "UK", price: 20)]
+        let productData = APIService.sharedInstance.getSalesDetailArray(jsonData: product)
+        let result = ["V": ["UK": 30], "U": ["US": 30]]
+        XCTAssertFalse(productData ==  result)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testNilGetSalesDetailArray(){
+        let productData = APIService.sharedInstance.getSalesDetailArray(jsonData: nil)
+        XCTAssertNil(productData)
     }
-
+     
+    func testGetProductName() {
+        let some: [String: [String : Int]] = ["anil" :["a": 10],"ashu" :["b": 11]]
+        let value = APIService.sharedInstance.getProductName(prodData: some)
+        XCTAssertEqual(["anil","ashu"], value)
+    }
+    
+    func testNilGetProductName(){
+        let value = APIService.sharedInstance.getProductName(prodData: nil)
+        XCTAssertNil(value)
+    }
+    
+    func testFalseGetProductName() {
+        let some: [String: [String : Int]] = ["anil" :["a": 10],"ashu" :["b": 11]]
+        let value = APIService.sharedInstance.getProductName(prodData: some)
+        XCTAssertFalse(value == ["anil1","ashu"])
+    }
 }

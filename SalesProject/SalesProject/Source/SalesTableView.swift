@@ -8,13 +8,12 @@
 import UIKit
 
 class SalesTableView: UITableView {
-    
     let cellId = "CellID"
     var salesDetail = [String: [String : Int]]()
     var productName = [String]()
     var maxSalesPrice = String()
     var selectedCell : IndexPath?
- 
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style:style)
         self.setupTableView()
@@ -22,14 +21,15 @@ class SalesTableView: UITableView {
     }
 
     required init?(coder: NSCoder) {
-        #warning("Read about this")
         fatalError("init(coder:) has not been implemented")
     }
     
     func handleSalesData() {
         guard let data = APIService.sharedInstance.loadJson(filename: "Data") else { return }
-        salesDetail = APIService.sharedInstance.getSalesDetailArray(jsonData: data)
-        productName = APIService.sharedInstance.getProductName(prodData: salesDetail)
+        guard let sales = APIService.sharedInstance.getSalesDetailArray(jsonData: data) else { return }
+        salesDetail = sales
+        guard let products = APIService.sharedInstance.getProductName(prodData: salesDetail) else {return}
+        productName = products
     }
     
     fileprivate func setupTableView() {
@@ -48,8 +48,6 @@ extension SalesTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        #warning("Deque")
-        #warning("if possible move this to custom cell")
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
         cell.selectionStyle = .none
         cell.textLabel?.text = "Product Name  \(productName[indexPath.row])"
@@ -62,14 +60,10 @@ extension SalesTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let ProdKey = productName[indexPath.row]
-        if let prodDetailArray = salesDetail[ProdKey] {
-            let highestSale = prodDetailArray.max { a , b  in a.value < b.value}
-            guard let countryValue = highestSale?.key else {return}
-            guard let priceValue = highestSale?.value else {return }
-            maxSalesPrice = "Max Total Sale in \(countryValue):\(priceValue)"
-            selectedCell = indexPath
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
+        guard let maxSales = APIService.sharedInstance.getMaxSalePrice(salesDetail: salesDetail, key: ProdKey) else { return }
+        maxSalesPrice = maxSales
+        selectedCell = indexPath
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
   

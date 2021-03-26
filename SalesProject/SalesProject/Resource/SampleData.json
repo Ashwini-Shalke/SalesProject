@@ -1,0 +1,4 @@
+{ "sales" :  [
+  { "prod" : "E", "country" : "USA", "price" : 8000 },
+  { "prod" : "C", "country" : "USA", "price" : 2000 }
+] }
