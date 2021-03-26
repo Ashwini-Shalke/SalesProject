@@ -2,8 +2,8 @@
 
 **Test coverage** - 79%
 
-- [ ] Unit test 
-- [ ] UI test
+- [X] Unit test 
+- [X] UI test
 
 ## How to run 
 
