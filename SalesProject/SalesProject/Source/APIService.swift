@@ -8,7 +8,7 @@
 import UIKit
 
 class APIService : NSObject {
-    
+
     static let sharedInstance = APIService()
 
     //reading JSON file
@@ -22,7 +22,6 @@ class APIService : NSObject {
     }
     
     func getSalesDetailArray(jsonData : [Product]?) -> [String: [String : Int]]? {
-//        var prodData :[String : Int]?
         var salesDetail = [String: [String : Int]]()
         guard  let data = jsonData else { return nil }
         
@@ -47,13 +46,23 @@ class APIService : NSObject {
     func getProductName(prodData: [String: [String : Int]]?) -> [String]? {
         var prodName = [String]()
         guard let keys = prodData?.keys else {return nil}
-        
         for key in keys {
             prodName.append(key)
         }
-        
-       prodName.sort()
+        prodName.sort()
         return prodName
+    }
+    
+    
+    func getMaxSalePrice(salesDetail : [String: [String : Int]], key: String ) -> String? {
+        var maxSalesPrice : String?
+        if let prodDetailArray = salesDetail[key] {
+            let highestSale = prodDetailArray.max { a , b  in a.value < b.value}
+            guard let countryValue = highestSale?.key else { return nil }
+            guard let priceValue = highestSale?.value else { return nil }
+            maxSalesPrice = "Max Total Sale in \(countryValue):\(priceValue)"
+        }
+        return maxSalesPrice
     }
 }
 

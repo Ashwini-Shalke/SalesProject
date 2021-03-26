@@ -22,11 +22,11 @@ class SalesViewController: UIViewController {
     func setupLayout(){
         salesTableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(salesTableView)
-        #warning("Pin tableview to viewcontroller")
         NSLayoutConstraint.activate([
             salesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            salesTableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
-            salesTableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
+            salesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            salesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            salesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
